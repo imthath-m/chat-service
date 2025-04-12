@@ -1,4 +1,4 @@
-package com.vaan.task.talk.chat_mcp_client;
+package com.vaan.task.talk.chat_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Import;
 
 @Import(TestcontainersConfiguration.class)
 @SpringBootTest
-class ChatMcpClientApplicationTests {
+class ChatServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

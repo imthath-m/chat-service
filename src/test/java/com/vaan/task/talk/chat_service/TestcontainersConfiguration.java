@@ -1,4 +1,4 @@
-package com.vaan.task.talk.chat_mcp_client;
+package com.vaan.task.talk.chat_service;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;

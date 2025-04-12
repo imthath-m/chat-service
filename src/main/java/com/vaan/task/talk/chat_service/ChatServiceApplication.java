@@ -1,13 +1,13 @@
-package com.vaan.task.talk.chat_mcp_client;
+package com.vaan.task.talk.chat_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ChatMcpClientApplication {
+public class ChatServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ChatMcpClientApplication.class, args);
+		SpringApplication.run(ChatServiceApplication.class, args);
 	}
 
 }

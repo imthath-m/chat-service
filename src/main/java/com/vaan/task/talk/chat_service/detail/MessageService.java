@@ -29,10 +29,10 @@ public class MessageService {
         messageRepository.deleteById(messageId);
     }
     
-    public Message sendMessage(String chatId, String content, String userId, String title) {
+    public Message sendMessage(String chatId, String content, String userId) {
         // If chatId is not provided, create a new chat
         if (chatId == null || chatId.isEmpty()) {
-            Chat newChat = chatService.createChat(title, userId);
+            Chat newChat = chatService.createChat("title", userId);
             chatId = newChat.getId();
         }
 

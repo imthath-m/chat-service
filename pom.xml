@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.vaan.task.talk</groupId>
-	<artifactId>chat-mcp-client</artifactId>
+	<artifactId>chat-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>chat-mcp-client</name>
-	<description>LLM Chat app with support for mcp client</description>
+	<name>Chat Service</name>
+	<description>LLM Chat app with support for MCP client</description>
 	<url/>
 	<licenses>
 		<license/>

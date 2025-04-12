@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import com.vaan.task.talk.chat_service.list.ChatService;
 import com.vaan.task.talk.chat_service.list.Chat;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class MessageService {
@@ -28,12 +29,22 @@ public class MessageService {
     public void deleteMessage(String messageId) {
         messageRepository.deleteById(messageId);
     }
-    
+
+    @Transactional
     public Message sendMessage(String chatId, String content, String userId) {
         // If chatId is not provided, create a new chat
         if (chatId == null || chatId.isEmpty()) {
             Chat newChat = chatService.createChat("title", userId);
             chatId = newChat.getId();
+//        } else {
+//            var messages = getMessagesByChatId(chatId);
+//            // loop through messages and create a new string with all the messages and the roles
+//            StringBuilder allMessages = new StringBuilder();
+//            for (Message message : messages) {
+//                allMessages.append(message.getRole()).append(": ").append(message.getContent()).append("\n");
+//            }
+//            allMessages.append("user: ").append(content).append("\n");
+//            content = allMessages.toString();
         }
 
         // Create user message

@@ -1,6 +1,5 @@
 package com.vaan.task.talk.chat_service.list;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +9,6 @@ public class ChatService {
     
     private final ChatRepository chatRepository;
     
-    @Autowired
     public ChatService(ChatRepository chatRepository) {
         this.chatRepository = chatRepository;
     }

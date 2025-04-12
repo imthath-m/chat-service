@@ -2,7 +2,6 @@ package com.vaan.task.talk.chat_service.list;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +32,6 @@ public class ChatService {
         return chatRepository.findById(id)
                 .map(chat -> {
                     chat.setTitle(title);
-                    chat.setUpdatedAt(LocalDateTime.now());
                     return chatRepository.save(chat);
                 })
                 .orElseThrow(() -> new RuntimeException("Chat not found with id: " + id));
@@ -43,7 +41,6 @@ public class ChatService {
         chatRepository.findById(id)
                 .ifPresent(chat -> {
                     chat.setArchived(true);
-                    chat.setUpdatedAt(LocalDateTime.now());
                     chatRepository.save(chat);
                 });
     }
@@ -56,7 +53,6 @@ public class ChatService {
         chatRepository.findById(id)
                 .ifPresent(chat -> {
                     chat.setLastMessage(lastMessage);
-                    chat.setUpdatedAt(LocalDateTime.now());
                     chatRepository.save(chat);
                 });
     }

@@ -1,5 +1,6 @@
 package com.vaan.task.talk.chat_service.detail;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,19 +51,10 @@ public class MessageController {
 }
 
 // Request DTO for creating a message
+@Getter
 class MessageRequest {
     private String chatId;
     private String content;
     private String userId;
     private String title;
-
-    // Getters and setters
-    public String getChatId() { return chatId; }
-    public void setChatId(String chatId) { this.chatId = chatId; }
-    public String getContent() { return content; }
-    public void setContent(String content) { this.content = content; }
-    public String getUserId() { return userId; }
-    public void setUserId(String userId) { this.userId = userId; }
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
 }

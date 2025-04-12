@@ -14,6 +14,9 @@ public class MessageService {
     @Autowired
     private ChatService chatService;
 
+    @Autowired
+    private LLMService llmService;
+
     public List<Message> getMessagesByChatId(String chatId) {
         return messageRepository.findByChatIdOrderByCreatedAtAsc(chatId);
     }
@@ -38,9 +41,8 @@ public class MessageService {
         Message savedUserMessage = saveMessage(userMessage);
 
         // Create assistant message (empty for now)
-        Message assistantMessage = new Message(chatId, "", "assistant");
-        Message savedAssistantMessage = saveMessage(assistantMessage);
+        Message assistantMessage = new Message(chatId, llmService.getAnswer(content), "assistant");
 
-        return savedAssistantMessage;
+        return saveMessage(assistantMessage);
     }
 }

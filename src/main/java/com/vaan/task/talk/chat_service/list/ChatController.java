@@ -1,6 +1,6 @@
 package com.vaan.task.talk.chat_service.list;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -15,47 +15,50 @@ public class ChatController {
     }
     
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Chat>> getAllChatsByUserId(@PathVariable String userId) {
-        return ResponseEntity.ok(chatService.getAllChatsByUserId(userId));
+    @ResponseStatus(HttpStatus.OK)
+    public List<Chat> getAllChatsByUserId(@PathVariable String userId) {
+        return chatService.getAllChatsByUserId(userId);
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<Chat> getChatById(@PathVariable String id) {
+    @ResponseStatus(HttpStatus.OK)
+    public Chat getChatById(@PathVariable String id) {
         return chatService.getChatById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new RuntimeException("Chat not found"));
     }
     
     @PostMapping
-    public ResponseEntity<Chat> createChat(@RequestParam String title, @RequestParam String userId) {
-        return ResponseEntity.ok(chatService.createChat(title, userId));
+    @ResponseStatus(HttpStatus.CREATED)
+    public Chat createChat(@RequestParam String title, @RequestParam String userId) {
+        return chatService.createChat(title, userId);
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<Chat> updateChat(@PathVariable String id, @RequestParam String title) {
+    @ResponseStatus(HttpStatus.OK)
+    public Chat updateChat(@PathVariable String id, @RequestParam String title) {
         try {
-            return ResponseEntity.ok(chatService.updateChat(id, title));
+            return chatService.updateChat(id, title);
         } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            throw new RuntimeException("Chat not found");
         }
     }
     
     @PutMapping("/{id}/archive")
-    public ResponseEntity<Void> archiveChat(@PathVariable String id) {
+    @ResponseStatus(HttpStatus.OK)
+    public void archiveChat(@PathVariable String id) {
         chatService.archiveChat(id);
-        return ResponseEntity.ok().build();
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteChat(@PathVariable String id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteChat(@PathVariable String id) {
         chatService.deleteChat(id);
-        return ResponseEntity.ok().build();
     }
     
     @PutMapping("/{id}/last-message")
-    public ResponseEntity<Void> updateLastMessage(@PathVariable String id, @RequestParam String lastMessage) {
+    @ResponseStatus(HttpStatus.OK)
+    public void updateLastMessage(@PathVariable String id, @RequestParam String lastMessage) {
         chatService.updateLastMessage(id, lastMessage);
-        return ResponseEntity.ok().build();
     }
 }
 

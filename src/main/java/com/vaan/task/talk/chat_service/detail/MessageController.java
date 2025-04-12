@@ -2,7 +2,7 @@ package com.vaan.task.talk.chat_service.detail;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import com.vaan.task.talk.chat_service.list.ChatService;
@@ -18,12 +18,14 @@ public class MessageController {
     private ChatService chatService;
 
     @GetMapping("/{chatId}")
-    public ResponseEntity<List<Message>> getMessages(@PathVariable String chatId) {
-        return ResponseEntity.ok(messageService.getMessagesByChatId(chatId));
+    @ResponseStatus(HttpStatus.OK)
+    public List<Message> getMessages(@PathVariable String chatId) {
+        return messageService.getMessagesByChatId(chatId);
     }
 
     @PostMapping
-    public ResponseEntity<Message> createMessage(@RequestBody MessageRequest request) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public Message createMessage(@RequestBody MessageRequest request) {
         String chatId = request.getChatId();
         
         // If chatId is not provided, create a new chat
@@ -40,13 +42,13 @@ public class MessageController {
         Message assistantMessage = new Message(chatId, "", "assistant");
         Message savedAssistantMessage = messageService.saveMessage(assistantMessage);
 
-        return ResponseEntity.ok(savedAssistantMessage);
+        return savedAssistantMessage;
     }
 
     @DeleteMapping("/{messageId}")
-    public ResponseEntity<Void> deleteMessage(@PathVariable String messageId) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteMessage(@PathVariable String messageId) {
         messageService.deleteMessage(messageId);
-        return ResponseEntity.ok().build();
     }
 }
 

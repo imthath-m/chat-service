@@ -7,25 +7,15 @@ import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-//@Service
+@Service
 public class LLMService {
 
-//    @Autowired
+    @Autowired
     private ChatClient.Builder chatClientBuilder;
-
-//    @Autowired
-    private ToolCallbackProvider toolCallbackProvider;
-
-    public LLMService(ChatClient.Builder chatClientBuilder, ToolCallbackProvider toolCallbackProvider) {
-        this.chatClientBuilder = chatClientBuilder;
-        this.toolCallbackProvider = toolCallbackProvider;
-    }
 
     public String getAnswer(String question) {
         // Create a chat client
-        ChatClient chatClient = chatClientBuilder
-                .defaultTools(toolCallbackProvider)
-                .build();
+        ChatClient chatClient = chatClientBuilder.build();
 
         // Return the response
         return chatClient.prompt(question).call().content();

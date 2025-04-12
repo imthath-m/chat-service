@@ -2,7 +2,6 @@ package com.vaan.task.talk.chat_service;
 
 import com.vaan.task.talk.chat_service.detail.LLMService;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.tool.ToolCallbackProvider;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -12,10 +11,5 @@ public class ChatServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ChatServiceApplication.class, args);
-	}
-
-	@Bean
-	LLMService createLLMService(ChatClient.Builder builder, ToolCallbackProvider toolCallbackProvider) {
-		return new LLMService(builder, toolCallbackProvider);
 	}
 }

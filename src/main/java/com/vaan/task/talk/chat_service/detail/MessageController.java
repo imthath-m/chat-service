@@ -5,17 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import com.vaan.task.talk.chat_service.list.ChatService;
-import com.vaan.task.talk.chat_service.list.Chat;
 
 @RestController
 @RequestMapping("/api/messages")
 public class MessageController {
     @Autowired
     private MessageService messageService;
-    
-    @Autowired
-    private ChatService chatService;
 
     @GetMapping("/{chatId}")
     @ResponseStatus(HttpStatus.OK)
@@ -23,26 +18,15 @@ public class MessageController {
         return messageService.getMessagesByChatId(chatId);
     }
 
-    @PostMapping
+    @PostMapping("/send")
     @ResponseStatus(HttpStatus.CREATED)
-    public Message createMessage(@RequestBody MessageRequest request) {
-        String chatId = request.getChatId();
-        
-        // If chatId is not provided, create a new chat
-        if (chatId == null || chatId.isEmpty()) {
-            Chat newChat = chatService.createChat(request.getTitle(), request.getUserId());
-            chatId = newChat.getId();
-        }
-
-        // Create user message
-        Message userMessage = new Message(chatId, request.getContent(), "user");
-        Message savedUserMessage = messageService.saveMessage(userMessage);
-
-        // Create assistant message (empty for now)
-        Message assistantMessage = new Message(chatId, "", "assistant");
-        Message savedAssistantMessage = messageService.saveMessage(assistantMessage);
-
-        return savedAssistantMessage;
+    Message sendMessage(@RequestBody MessageRequest request) {
+        return messageService.sendMessage(
+            request.getChatId(), 
+            request.getContent(), 
+            request.getUserId(), 
+            request.getTitle()
+        );
     }
 
     @DeleteMapping("/{messageId}")

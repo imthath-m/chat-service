@@ -1,5 +1,6 @@
 package com.vaan.task.talk.chat_service.detail;
 
+import org.springframework.ai.chat.messages.MessageType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -39,11 +40,15 @@ public class MessageService {
         }
 
         // Create user message
-        Message userMessage = new Message(chatId, content, "user");
+        Message userMessage = new Message(chatId, content, MessageType.USER.getValue());
         saveMessage(userMessage);
 
         // Create assistant message (empty for now)
-        Message assistantMessage = new Message(chatId, llmService.continueChat(content, chatId), "assistant");
+        Message assistantMessage = new Message(
+                chatId,
+                llmService.continueChat(content, chatId),
+                MessageType.ASSISTANT.getValue()
+        );
 
         return saveMessage(assistantMessage);
     }

@@ -1,29 +1,23 @@
 package com.vaan.task.talk.chat_service.detail;
 
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
-import org.springframework.ai.chat.memory.InMemoryChatMemory;
-import org.springframework.ai.tool.ToolCallbackProvider;
+import org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor;
+import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LLMService {
 
-    @Autowired
-    private ChatClient.Builder chatClientBuilder;
+    private final String conversationIdKey = AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY;
 
     @Autowired
-    private ToolCallbackProvider toolCallbackProvider;
+    private ChatClient chatClient;
 
-    public String getAnswer(String question) {
-        // Create a chat client
-        ChatClient chatClient = chatClientBuilder
-                .defaultTools(toolCallbackProvider)
-                .defaultAdvisors(new MessageChatMemoryAdvisor(new InMemoryChatMemory()))
-                .build();
-
-        // Return the response
-        return chatClient.prompt(question).call().content();
+    public String continueChat(String userMessage, String chatId) {
+        return chatClient
+                .prompt(userMessage)
+                .advisors(advisor -> advisor.param(conversationIdKey, chatId))
+                .call().content();
     }
 }

@@ -36,23 +36,14 @@ public class MessageService {
         if (chatId == null || chatId.isEmpty()) {
             Chat newChat = chatService.createChat("title", userId);
             chatId = newChat.getId();
-//        } else {
-//            var messages = getMessagesByChatId(chatId);
-//            // loop through messages and create a new string with all the messages and the roles
-//            StringBuilder allMessages = new StringBuilder();
-//            for (Message message : messages) {
-//                allMessages.append(message.getRole()).append(": ").append(message.getContent()).append("\n");
-//            }
-//            allMessages.append("user: ").append(content).append("\n");
-//            content = allMessages.toString();
         }
 
         // Create user message
         Message userMessage = new Message(chatId, content, "user");
-        Message savedUserMessage = saveMessage(userMessage);
+        saveMessage(userMessage);
 
         // Create assistant message (empty for now)
-        Message assistantMessage = new Message(chatId, llmService.getAnswer(content), "assistant");
+        Message assistantMessage = new Message(chatId, llmService.continueChat(content, chatId), "assistant");
 
         return saveMessage(assistantMessage);
     }

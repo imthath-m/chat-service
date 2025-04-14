@@ -32,7 +32,7 @@ public class MessageService {
     }
 
     @Transactional
-    public Message sendMessage(String chatId, String content, String userId) {
+    public Message sendMessage(String chatId, String content, String userId, String model) {
         // If chatId is not provided, create a new chat
         if (chatId == null || chatId.isEmpty()) {
             Chat newChat = chatService.createChat("title", userId);
@@ -46,7 +46,7 @@ public class MessageService {
         // Create assistant message (empty for now)
         Message assistantMessage = new Message(
                 chatId,
-                llmService.continueChat(content, chatId),
+                llmService.continueChat(content, chatId, model),
                 MessageType.ASSISTANT.getValue()
         );
 

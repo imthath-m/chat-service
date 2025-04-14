@@ -24,7 +24,8 @@ public class MessageController {
         return messageService.sendMessage(
             request.getChatId(), 
             request.getContent(), 
-            request.getUserId()
+            request.getUserId(),
+            request.getModel()
         );
     }
 
@@ -41,4 +42,5 @@ class MessageRequest {
     private String chatId;
     private String content;
     private String userId;
+    private String model;
 }

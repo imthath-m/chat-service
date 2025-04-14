@@ -1,6 +1,5 @@
 package com.vaan.task.talk.chat_service;
 
-import com.vaan.task.talk.chat_service.detail.LLMService;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.InMemoryChatMemory;
